@@ -1,15 +1,19 @@
-// number, string, boolean, null, undefined
-// object
+// старое создание объектов
 
-var car = {
-  name: 'Ford',
-  year: 2015,
-  person: {
-
-  }
+function Car(name, year) {
+  this.name = name
+  this.year = year
 }
 
-// car.__proto__ => Object.prototype
-// [] => Array => Object
 
-console.log(car)
+Car.prototype.getAge = function () {
+  return new Date().getFullYear() - this.year
+}
+
+Car.prototype.color = 'black'
+
+var ford = new Car('ford', 2015)
+var bmw = new Car('bmw', 2017)
+console.log(ford);
+console.log(bmw);
+
