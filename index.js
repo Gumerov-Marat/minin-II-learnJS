@@ -1,43 +1,55 @@
-// объекты
-// const createCar = (name, model) => {
-//   return { name, model }
-// }
+const form = document.querySelector('form')
 
-// улучшеный
+form.addEventListener('submit', event =>{
 
-const createCar = (name, model) => ({ name, model })
- 
-const ford = createCar('Ford', 'focus')
+  event.preventDefault()
 
-console.log(ford);
+  const title = form.title.value
+  const text = form.text.value
+  const description = form.description.value
+  
+  saveForm(title, text, description)
+})
 
-const yearField = 'year'
-
-
-// const bmw = {
-//   name: 'BMW',
-//   ['model']: 'X6 Sport',
-//   [yearField]: 2018,
-//   logField(){
-//     console.log(this.name, this.model, this.year)
+// function saveForm(data) {
+//   //деструктурируем (1)
+//   const {title, text, description} = data
+//   const formData = {
+//     date: new Date().toLocaleDateString(),
+//     // title: data.title,
+//     // text: data.text,
+//     // description: data.description
+//     title, text, description //(1)
 //   }
+//   console.log('Form data', formData)
+  
+// }
+
+// function saveForm ({title, text, description}) {
+//   const formData = {
+//     date: new Date().toLocaleDateString(),
+//     title, text, description //(2)
+//   }
+//   console.log('Form data', formData)
 // }
 
 
-// пример деструктуризации
-const bmw = {
-  name: 'BMW',
-  ['model']: 'X6 Sport',
-  [yearField]: 2018,
-  logField(){
-    const {name,model,year}= this
-    console.log(name, model, year)
+//Spread
+function saveForm (data) {
+  const formData = {
+    date: new Date().toLocaleDateString(),
+    ...data //(3)
   }
+  console.log('Form data', formData)
 }
 
-// console.log(bmw)
-// bmw.logField()
+//REST
+function saveForm(...args) {
+  const [title,text,description]= args
 
-//const year = bmw.year
-const {year} = bmw
-console.log(year);
+  const formData = {
+    date: new Date().toLocaleDateString(),
+    title, text, description
+  }
+  console.log('Form data', formData)
+}
