@@ -1,37 +1,43 @@
-/*
-Реализуйте возможность ипользуя прототипы.
-Дан массив, у него должен быть новый метод,
-позволяющий удваивать значение каждого элемента
-с учетом типа данных, таким образом, чтобы:
-1_ Для чисел это возведение в квадрат
-2_ Для строк это удваивание строки
-3_ Метод не изменял существующих массив, делал новый.
+// объекты
+// const createCar = (name, model) => {
+//   return { name, model }
+// }
 
-Пример
-[1,2,3] => [1,4,9]
-[5,'Hello', 6] => [25, 'HelloHello', 36]
-*/
+// улучшеный
 
-var a = [1,2,3]
-var b = [5, 'Hello', 6]
+const createCar = (name, model) => ({ name, model })
+ 
+const ford = createCar('Ford', 'focus')
 
-Array.prototype.double = function() {
-  var newArray = this.map(function(item){
-    if (typeof item === 'number'){
-      return Math.pow(item, 2)
-    }
+console.log(ford);
 
-    if (typeof item === 'string') {
-      return item += item
-    }
-  })
+const yearField = 'year'
 
-  return newArray
+
+// const bmw = {
+//   name: 'BMW',
+//   ['model']: 'X6 Sport',
+//   [yearField]: 2018,
+//   logField(){
+//     console.log(this.name, this.model, this.year)
+//   }
+// }
+
+
+// пример деструктуризации
+const bmw = {
+  name: 'BMW',
+  ['model']: 'X6 Sport',
+  [yearField]: 2018,
+  logField(){
+    const {name,model,year}= this
+    console.log(name, model, year)
+  }
 }
 
-var newA = a.double()
-var newB = b.double()
+// console.log(bmw)
+// bmw.logField()
 
-console.log('A', newA);
-console.log('B', newB);
-
+//const year = bmw.year
+const {year} = bmw
+console.log(year);
