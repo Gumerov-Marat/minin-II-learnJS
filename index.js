@@ -1,40 +1,37 @@
-function printObject (objName) {
-  console.log('Printing object: ', objName);
-  
-  for (var key in this){
-    if (this.hasOwnProperty(key)){
-      console.log('['+ key + ']', this[key]);
-    }
-  }
-}
-
-var person = {
-  firstName: 'Max',
-  job: 'BackEnd',
-  age: 29,
-  friends: ['Elena', 'Igor']
-}
-
-var car = {
-  name: 'Ford',
-  model: 'Focus',
-  year: 2017
-}
-// (1)
-//printObject.bind(person) // bind возвращает новую функцию с уже привязаным контекстом
-var printPerson = printObject.bind(person)// теперь  this это   от объекта персон
-printPerson('person') // запускаем printObject('person)
-
-//(2)
 /*
-call делает тоже самое что и байнт
-но только еще и сразу вызывает
-первый параметр объект (который
-  мы хотим передать в качестве контекста
-  ), второй параметр
-его имя для printObject
-*/
-printObject.call(car, 'Car')
+Реализуйте возможность ипользуя прототипы.
+Дан массив, у него должен быть новый метод,
+позволяющий удваивать значение каждого элемента
+с учетом типа данных, таким образом, чтобы:
+1_ Для чисел это возведение в квадрат
+2_ Для строк это удваивание строки
+3_ Метод не изменял существующих массив, делал новый.
 
-//(3)
-printObject.apply(person, ['Person'])
+Пример
+[1,2,3] => [1,4,9]
+[5,'Hello', 6] => [25, 'HelloHello', 36]
+*/
+
+var a = [1,2,3]
+var b = [5, 'Hello', 6]
+
+Array.prototype.double = function() {
+  var newArray = this.map(function(item){
+    if (typeof item === 'number'){
+      return Math.pow(item, 2)
+    }
+
+    if (typeof item === 'string') {
+      return item += item
+    }
+  })
+
+  return newArray
+}
+
+var newA = a.double()
+var newB = b.double()
+
+console.log('A', newA);
+console.log('B', newB);
+
