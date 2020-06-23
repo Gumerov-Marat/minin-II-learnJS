@@ -1,30 +1,39 @@
-var createCounter = function (countername) {
-  var counter = 0
-  return {
-    increment: function () {
-      counter++
-    },
-    decrement: function () {
-      counter--
-    },
-    getCounter: function () {
-      return counter
-    }
+var person = {
+  age: 28,
+  name: 'Max',
+  job: 'Frontend',
+  displayInfo: function(ms){
+    //var self = this //(2)
+
+    setTimeout(function () {
+      // console.log('Name', this.name) // (1)
+      // console.log('Job', this.job) // (1)
+      // console.log('Age', this.age) // (1)
+
+      // console.log('Name', self.name) // (3)
+      // console.log('Job', self.job) // (3)
+      // console.log('Age', self.age) // (3)
+
+      console.log('Name', this.name) // (4)
+      console.log('Job', this.job) // (4)
+      console.log('Age', this.age) // (4)
+    }.bind(this), ms) //(4) добавили  bind(this)
   }
 }
 
-var counterA = createCounter('Counter A')
-var counterB = createCounter('Counter B')
-
-counterA.increment()
-counterA.increment()
-counterA.increment()
-
-counterB.decrement()
-counterB.decrement()
+person.displayInfo(100)
 
 /*
- Памятка для меня самого - замыкание по сути не правильный термин. на английском замыкание - Локинг - блокирование.
- Блокируется переменная внутри функции, после чего можно ею манипулировать. При этом передавать копию функции можно и вместе 
- копией не будут копироваться данные.  Каждая переменная будет уникальна хоть и с одно имя. (разные ячейки памяти)
+Объяснение:
+
+setTimeout(function () {} =  функция создает свою
+область видимости.(скоуп). И у нее своя  this
+относящаяся к Сет таймаут - а она в свою очередь объект 
+виндов.
+
+Как с этим бороться?
+(2) - создаем переменную в нее положим this
+(3) - обращаемся не к this а  к  self
+
+(4) -  добавили байнд
 */
