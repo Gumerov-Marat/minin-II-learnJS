@@ -1,19 +1,21 @@
-// старое создание объектов
-
-function Car(name, year) {
-  this.name = name
-  this.year = year
+var person = {
+  name: 'Max',
+  age: 28,
+  job: 'Frontend'
 }
 
+// for (var key in person){
+//   if (person.hasOwnProperty(key)){
+//   console.log(person[key]);
+//   }
+// }
 
-Car.prototype.getAge = function () {
-  return new Date().getFullYear() - this.year
-}
+var keys = Object.keys(person)
+console.log(keys);
 
-Car.prototype.color = 'black'
+console.log("Второй способ");
 
-var ford = new Car('ford', 2015)
-var bmw = new Car('bmw', 2017)
-console.log(ford);
-console.log(bmw);
-
+Object.keys(person).forEach(function (key) {
+  console.log(person[key]);
+  
+})
