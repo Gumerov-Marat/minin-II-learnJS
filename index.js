@@ -1,21 +1,30 @@
-var person = {
-  name: 'Max',
-  age: 28,
-  job: 'Frontend'
+var createCounter = function (countername) {
+  var counter = 0
+  return {
+    increment: function () {
+      counter++
+    },
+    decrement: function () {
+      counter--
+    },
+    getCounter: function () {
+      return counter
+    }
+  }
 }
 
-// for (var key in person){
-//   if (person.hasOwnProperty(key)){
-//   console.log(person[key]);
-//   }
-// }
+var counterA = createCounter('Counter A')
+var counterB = createCounter('Counter B')
 
-var keys = Object.keys(person)
-console.log(keys);
+counterA.increment()
+counterA.increment()
+counterA.increment()
 
-console.log("Второй способ");
+counterB.decrement()
+counterB.decrement()
 
-Object.keys(person).forEach(function (key) {
-  console.log(person[key]);
-  
-})
+/*
+ Памятка для меня самого - замыкание по сути не правильный термин. на английском замыкание - Локинг - блокирование.
+ Блокируется переменная внутри функции, после чего можно ею манипулировать. При этом передавать копию функции можно и вместе 
+ копией не будут копироваться данные.  Каждая переменная будет уникальна хоть и с одно имя. (разные ячейки памяти)
+*/
