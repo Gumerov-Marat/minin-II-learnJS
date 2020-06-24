@@ -1,62 +1,66 @@
-// RootElement <= Box <= instances
+/* Реализуйте клас Дропдаун, который будет 
+инициализировать компонент выбора
+элементов по функционалу похожий на обычный ХТМЛ
+элемент select, но реализованый своим кодом.
 
-class RootElement {
-  constructor(tagName = 'div') {
-    this.$el = document.createElement(tagName)
-    this.$el.style.marginBottom = '20px'
-  }
-
-  hide() {
-    this.$el.style.opacity = '0'
-  }
-
-  show() {
-    this.$el.style.opacity = '1'
-  }
-
-  append() {
-    document.querySelector('.wrapper').insertAdjacentElement('beforeend', this.$el)
-  }
-}
-
-class Box extends RootElement {
-  constructor(color, size = 150, tagName) {
-    super(tagName)
-    this.color = color
-    this.size = size
-  }
-
-  create() {
-    this.$el.style.background = this.color
-    this.$el.style.width = this.$el.style.height = `${this.size}px`
-    this.append()
-    return this
-  }
-}
-
-class Circle extends RootElement {
-  constructor(color) {
-    super()
-    this.color = color
-  }
-
-  create() {
-    this.$el.style.borderRadius = '50%'
-    this.$el.style.width = this.$el.style.height = `120px`
-    this.$el.style.background = this.color
-    this.append()
-    return this
-  }
-}
-
-const redBox = new Box('red', 100, 'div').create()
-const blueBox = new Box('blue').create()
-const circle = new Circle('green').create()
-
-circle.$el.addEventListener('mouseenter', () => {
-  circle.hide()
+Пример использования:
+const dropdown = new Dropdown('dropdown',{
+  items: [
+    {label: 'Москва', id: 'msk'},
+    {label: 'Санкт-Петербург', id: 'spb'},
+    {label: 'Новосибирск', id: 'bsk'},
+    {label: 'Краснодар', id: 'krdr'},
+  ]
 })
+*/
 
-circle.$el.addEventListener('mouseleave', () => {
-  circle.show()
+class Dropdown {
+  constructor(selector, options){
+    this.$el = document.querySelector(selector)
+    this.items = options.items
+    this.$el.querySelector('.dropdown__label').textContent = this.items[0].label
+
+    this.$el.addEventListener('click', event => {
+      if(event.target.classList.contains('dropdown__label')) {
+        if (this.$el.classList.contains('open')) {
+          this.close()
+        } else {
+          this.open()
+        }
+      } else if (event.target.tagName.toLowerCase() === 'li'){
+        this.select(event.target.dataset.id)
+        
+      }
+    })
+    const itemsHTML = this.items.map(i =>{
+      return `<li data-id="${i.id}">${i.label}</li>`
+    }).join(' ')
+
+    this.$el.querySelector('.dropdown__menu').insertAdjacentHTML('afterBegin', itemsHTML)
+  }
+
+  select(id){
+    const item = this.items.find(i =>i.id === id)
+    this.$el.querySelector('.dropdown__label').textContent = item.label
+    this.close()
+  }
+
+  open (){
+    this.$el.classList.add('open')
+
+  }
+
+  close(){
+    this.$el.classList.remove('open')
+  }
+}
+
+
+const dropdown = new Dropdown('#dropdown',{
+  items: [
+    {label: 'Москва', id: 'msk'},
+    {label: 'Санкт-Петербург', id: 'spb'},
+    {label: 'Новосибирск', id: 'bsk'},
+    {label: 'Краснодар', id: 'krdr'},
+  ]
 })
